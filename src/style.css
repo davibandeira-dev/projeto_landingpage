@@ -1,0 +1,746 @@
+/* Importa fontes do Google Fonts para uso em todo o projeto. */
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Karla:ital,wght@0,200..800;1,200..800&display=swap");
+
+/* Definição de variáveis CSS (custom properties) para cores e fontes, facilitando a manutenção e consistência do tema. */
+:root {
+  --cor1: oklch(28.893% 0.04739 295.658);
+  --cor2: hsl(216, 30%, 68%);
+  --cor3: hsl(270, 9%, 17%);
+  --cor4: hsl(273, 4%, 51%);
+  --cor5: hsl(0, 0%, 98%);
+  --font1: "DM Serif Display", "Times", serif;
+  --font2: "Karla", "Arial", sans-serif;
+}
+
+/* --- Configurações Gerais --- */
+/* Reset básico para todos os elementos, removendo margens e preenchimentos padrão e aplicando box-sizing para um layout mais previsível. */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+/* Remove o sublinhado padrão de todos os links. */
+a {
+  text-decoration: none;
+}
+
+/* Remove os marcadores de lista padrão (bolinhas, números, etc.). */
+ul {
+  list-style: none;
+}
+
+/* Garante que todas as imagens sejam responsivas, ocupando 100% da largura de seu contêiner pai. */
+img {
+  width: 100%;
+}
+
+/* --- Estilos do Cabeçalho (Header) --- */
+/* Define o layout do cabeçalho usando Flexbox para alinhar e espaçar o logo e o menu. */
+header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0px 10px;
+}
+
+/* Centraliza verticalmente o logotipo dentro do cabeçalho flexível. */
+header > div.logo {
+  align-self: center;
+}
+
+/* Oculta os ícones de hambúrguer e de fechar por padrão; eles serão exibidos apenas em telas menores via media query. */
+header div#icon_hamburguer,
+div#icon_close {
+  display: none;
+}
+
+/* Estilos para a lista de itens do menu de navegação, utilizando Flexbox para distribuição horizontal. */
+header > nav#menu ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+}
+
+/* --- Media Query para telas menores (até 650px de largura) --- */
+/* Ajustes para o layout do cabeçalho em dispositivos móveis, como smartphones. */
+@media screen and (max-width: 650px) {
+  /* Remove o preenchimento do cabeçalho para otimizar espaço em telas pequenas. */
+  header {
+    padding: 0px;
+  }
+
+  /* Oculta o menu de navegação principal por padrão em telas pequenas, para ser substituído pelo menu mobile. */
+  header > nav#menu {
+    display: none;
+  }
+
+  /* Define uma animação para o menu mobile, fazendo-o deslizar de baixo para cima. */
+  @keyframes go_up {
+    from {
+      transform: translateY(300px);
+    }
+    to {
+      transform: translateY(0px);
+    }
+  }
+
+  /* Estilos para o menu mobile quando ele está ativo (visível), posicionando-o na parte inferior da tela. */
+  header > nav#menu.active {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80vh;
+    background-color: var(--cor3);
+    z-index: 5;
+    background-image: url("images/bg-pattern-mobile-nav.svg") !important;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    animation: go_up 2s;
+  }
+
+  /* Organiza os itens da lista do menu mobile em uma coluna e os centraliza. */
+  header > nav#menu.active > ul {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Estilos para os links dentro do menu mobile ativo, incluindo tamanho e cor do texto. */
+  header > nav#menu.active > ul > a {
+    margin-top: 50px;
+    font-size: 1.2em;
+    color: white;
+  }
+
+  /* Efeito hover para os links do menu mobile, adicionando um sublinhado. */
+  header > nav#menu.active > ul > a:hover {
+    border-bottom: 1px solid white;
+    padding: 2px;
+    color: white;
+  }
+
+  /* Estilos específicos para o último link do menu mobile, que se comporta como um botão. */
+  header > nav#menu.active > ul > a:nth-last-child(1) {
+    margin-left: 0px;
+    padding: 10px 60px;
+    border: 1px solid white;
+    color: white;
+  }
+
+  /* Efeito hover para o botão do menu mobile, alterando sua aparência. */
+  header > nav#menu.active > ul > a:nth-last-child(1):hover {
+    cursor: pointer;
+    background-color: white;
+    color: var(--cor1);
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  /* Adiciona preenchimento à esquerda do logotipo em telas pequenas. */
+  header > div#logo {
+    padding-left: 10px;
+  }
+
+  /* Estilos para o botão do menu hambúrguer, que controla a visibilidade do menu mobile. */
+  header > div#botao_menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50px;
+    height: 40px;
+    margin-right: 10px;
+    border: 1px solid;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  /* Estilos para as "barras" individuais do ícone de hambúrguer. */
+  header > div#botao_menu > span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    border: 1px solid;
+    border-radius: 10px;
+    transition: all 0.4s;
+  }
+
+  /* Transforma a primeira barra em uma parte do 'X' quando o menu está ativo. */
+  header > div#botao_menu.active > span:nth-child(1) {
+    transform: translateY(8px) rotate(-45deg);
+  }
+
+  /* Oculta a barra do meio para formar o 'X' quando o menu está ativo. */
+  header > div#botao_menu.active > span:nth-child(2) {
+    opacity: 0;
+  }
+
+  /* Transforma a terceira barra em outra parte do 'X' quando o menu está ativo. */
+  header > div#botao_menu.active > span:nth-child(3) {
+    transform: translateY(-8px) rotate(45deg);
+  }
+}
+
+/* Estilos padrão para os links do menu de navegação, incluindo fonte, tamanho e cor. */
+header > nav#menu ul a {
+  font-family: var(--font2);
+  font-size: 0.8em;
+  font-weight: bold;
+  color: var(--cor4);
+  text-transform: uppercase;
+  transition: all 0.5s;
+}
+
+/* Efeito hover para os links do menu, alterando a cor do texto. */
+header > nav#menu ul a:hover {
+  cursor: pointer;
+  color: var(--cor1);
+}
+
+/* Estilos específicos para o último link do menu, formatando-o como um botão. */
+header > nav#menu ul a:nth-last-child(1) {
+  padding: 10px 20px;
+  margin-left: 20px;
+  color: var(--cor1);
+  border: 1px solid;
+  transition: all 0.5s;
+}
+
+/* Efeito hover para o botão do menu, alterando seu fundo e cor do texto. */
+header > nav#menu ul a:nth-last-child(1):hover {
+  cursor: pointer;
+  background-color: var(--cor1);
+  color: white;
+}
+
+/* --- Seção de Introdução (Intro) --- */
+/* Estilos para o fundo da seção de introdução, definindo a cor e o posicionamento. */
+section#intro-bg {
+  background-color: var(--cor1);
+  padding: 10px;
+  position: relative;
+}
+
+/* Contêiner principal da seção de introdução, usando Flexbox e centralizando o conteúdo. */
+div#intro {
+  display: flex;
+  max-width: 1100px;
+  position: relative;
+  margin: 0 auto;
+  padding: 130px 0px 150px 0px;
+}
+
+/* --- Imagens de Fundo da Introdução (Desktop e Mobile) --- */
+/* Posicionamento e estilo para a imagem decorativa do lado esquerdo na versão desktop. */
+div#image_intro_left_desktop {
+  position: absolute;
+  left: 0px;
+  bottom: -60%;
+  overflow: hidden;
+}
+
+/* Oculta a imagem decorativa do lado esquerdo para a versão mobile por padrão. */
+div#image_intro_left_mobile {
+  display: none;
+}
+
+/* --- Seção de Informações (Info) na Introdução --- */
+/* Estilos para o bloco de texto e botão na seção de introdução. */
+div#info {
+  max-width: 500px;
+}
+
+/* Cria uma linha decorativa antes do título da seção de informações. */
+div#info::before {
+  content: "";
+  display: block;
+  width: 200px;
+  height: 1px;
+  background-color: var(--cor2);
+  margin-bottom: 60px;
+}
+
+/* Estilos para o título principal da seção de informações. */
+div#info > h1 {
+  color: white;
+  font-size: 4em;
+  font-family: var(--font1);
+  font-weight: lighter;
+  line-height: 1;
+}
+
+/* Estilizar o tamanho do título a partir de 450px */
+@media screen and (max-width:450px) {
+  div#info > h1{
+    font-size: 3.2em;
+  }
+}
+
+/* Estilos para o parágrafo de texto na seção de informações. */
+div#info > p {
+  color: lightgray;
+  font-family: var(--font2);
+  line-height: 1.5;
+  margin-top: 20px;
+}
+
+/* Estilos para o botão na seção de informações, incluindo borda, fundo transparente e cor do texto. */
+div#info > a button {
+  padding: 10px 30px;
+  margin-top: 20px;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  font-family: var(--font2);
+  text-transform: uppercase;
+  border: 1px solid;
+  transition: all 0.5s;
+}
+
+/* Efeito hover para o botão da seção de informações. */
+div#info > a button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: var(--cor1);
+  font-weight: bold;
+}
+
+/* Ajusta a largura do link que contém o botão para se adaptar ao conteúdo. */
+div#info > a {
+  width: fit-content;
+}
+
+/* --- Imagens da Introdução (Desktop e Mobile) --- */
+/* Posicionamento e estilo para a imagem principal da introdução na versão desktop. */
+div#image_intro_desktop {
+  position: absolute;
+  top: 20%;
+  right: 10px;
+  width: 500px;
+}
+
+/* Oculta a imagem principal da introdução para a versão mobile por padrão. */
+div#image_intro_mobile {
+  display: none;
+}
+
+/* --- Media Query para telas menores (até 1000px de largura) na Seção de Introdução --- */
+/* Ajustes para a seção de introdução em telas de tablet ou menores. */
+@media screen and (max-width: 1000px) {
+  /* Ajusta o preenchimento inferior da seção de introdução. */
+  div#intro {
+    padding-bottom: 100px;
+  }
+
+  /* Torna a imagem principal da introdução estática e visível em telas menores. */
+  div#image_intro_desktop {
+    position: static;
+    display: block;
+  }
+}
+
+/* --- Imagens de Fundo Direita (Desktop e Mobile) --- */
+/* Oculta a imagem decorativa do lado direito para a versão mobile por padrão. */
+div#image_intro_right_mobile {
+  display: none;
+}
+
+/* Posicionamento e estilo para a imagem decorativa do lado direito na versão desktop. */
+div#image_intro_right_desktop {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  overflow: hidden;
+}
+
+/* Ajusta a posição vertical da imagem dentro de seu contêiner. */
+div#image_intro_right_desktop > img {
+  position: relative;
+  top: -80px;
+}
+
+/* --- Media Query para telas menores (até 790px de largura) na Seção de Introdução --- */
+/* Ajustes para a seção de introdução em dispositivos móveis menores. */
+@media screen and (max-width: 790px) {
+  /* Ajusta o posicionamento e preenchimento do fundo da seção de introdução. */
+  section#intro-bg {
+    position: relative;
+    padding: 0px;
+  }
+
+  /* Ajusta o posicionamento do contêiner de introdução. */
+  div#intro {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Apagar a barra antes do container info */
+  div#info::before{
+    display: none;
+  }
+
+  /* Adiciona preenchimento horizontal ao bloco de informações em mobile. */
+  div#info {
+    padding: 0px 10px;
+  }
+
+  /* Torna a imagem principal da introdução na versão mobile visível. */
+  div#image_intro_mobile {
+    display: block;
+    margin-bottom: -10px;
+  }
+
+  /* Oculta a imagem principal da introdução na versão desktop em mobile. */
+  div#image_intro_desktop {
+    display: none;
+  }
+
+  /* Oculta a imagem decorativa do lado esquerdo na versão desktop em mobile. */
+  div#image_intro_left_desktop {
+    display: none;
+  }
+
+  /* Torna a imagem decorativa do lado esquerdo na versão mobile visível. */
+  div#image_intro_left_mobile {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+
+  /* Oculta a imagem decorativa do lado direito na versão desktop em mobile. */
+  div#image_intro_right_desktop {
+    display: none;
+  }
+
+  /* Torna a imagem decorativa do lado direito na versão mobile visível. */
+  div#image_intro_right_mobile {
+    display: block;
+    position: absolute;
+    right: 0px;
+    bottom: -30%;
+  }
+}
+
+/* --- Seção de Qualidade (Quality) --- */
+/* Define o layout da seção de qualidade usando Grid, com áreas nomeadas para melhor organização. */
+section#quality {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 200px 250px;
+  grid-template-areas:
+    "titulo titulo titulo"
+    "qualidades qualidades qualidades";
+  gap: 10px;
+  max-width: 1100px;
+  margin: 350px auto 120px auto;
+  padding: 0px 10px;
+}
+
+/* Cria uma linha decorativa antes do título da seção de qualidade. */
+section#quality > h1::before {
+  content: "";
+  display: block;
+  width: 150px;
+  height: 2px;
+  background-color: lightgray;
+  margin-bottom: 60px;
+}
+
+/* Estilos para o título principal da seção de qualidade. */
+section#quality > h1 {
+  grid-area: titulo;
+  font-size: 4em;
+  font-family: var(--font1);
+  font-weight: lighter;
+}
+
+/* Estiliza o tamanho do título a partir de 450px */
+@media screen and (max-width:450px) {
+  section#quality > h1{
+    font-size: 3.2em;
+  }
+}
+
+/* Define a largura da imagem dentro de cada bloco de qualidade. */
+section#quality > div.qualities > div.image {
+  width: 100px;
+}
+
+/* Estilos para o subtítulo dentro de cada bloco de qualidade. */
+section#quality > div.qualities > h1 {
+  font-family: var(--font1);
+  font-weight: lighter;
+  margin-top: 20px;
+}
+
+/* Estilos para o parágrafo de texto dentro de cada bloco de qualidade. */
+section#quality > div.qualities > p {
+  font-family: var(--font2);
+  font-size: 1em;
+  color: gray;
+  margin-top: 20px;
+}
+
+/* --- Media Query para telas menores (até 750px de largura) na Seção de Qualidade --- */
+/* Ajustes para a seção de qualidade em dispositivos móveis. */
+@media screen and (max-width: 750px) {
+  /* Alinha a linha decorativa do título e ajusta sua cor e tamanho. */
+  section#quality > h1::before {
+    justify-self: center;
+    width: 200px;
+    height: 1px;
+    background-color: var(--cor1);
+  }
+
+  /* Reorganiza o layout da seção de qualidade para uma única coluna em mobile, com espaçamento maior. */
+  section#quality {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fit, (minmax(100px, auto)));
+    grid-template-areas:
+      "titulo"
+      "qualidades";
+    gap: 30px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  /* Centraliza e ajusta a largura de cada bloco de qualidade em mobile. */
+  div.qualities {
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Ajusta o tamanho da fonte do parágrafo de qualidade em mobile. */
+  section#quality > div.qualities > p {
+    font-size: 17px;
+  }
+}
+
+/* --- Seção "Como Trabalhamos" (How we work) --- */
+/* Adiciona preenchimento horizontal ao contêiner de fundo da seção. */
+section#how_we_work-bg {
+  padding: 0px 10px;
+}
+
+/* Contêiner principal da seção "Como Trabalhamos", com Flexbox para alinhar conteúdo e imagem de fundo. */
+div#how_we_work {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1110px;
+  margin: 0px auto;
+  padding: 80px 80px;
+  background-color: var(--cor1);
+  overflow: hidden;
+}
+
+/* Estilos para o título da seção "Como Trabalhamos". */
+div#how_we_work > h1 {
+  color: white;
+  font-family: var(--font1);
+  font-weight: lighter;
+  font-size: 3em;
+  line-height: 1;
+}
+
+/* Posicionamento da imagem decorativa de fundo na versão desktop. */
+div#image_how_we_work_desktop {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+/* Oculta a imagem decorativa de fundo para a versão mobile por padrão. */
+div#image_how_we_work_mobile {
+  display: none;
+}
+
+/* Garante que o link/botão esteja na camada superior (z-index) para interatividade. */
+div#how_we_work > a {
+  z-index: 1;
+}
+
+/* Estilos para o botão na seção "Como Trabalhamos", incluindo borda e fundo transparente. */
+div#how_we_work > a button {
+  padding: 10px 30px;
+  margin-top: 20px;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  font-family: var(--font2);
+  text-transform: uppercase;
+  border: 1px solid;
+  transition: all 0.5s;
+}
+
+/* Efeito hover para o botão na seção "Como Trabalhamos", alterando seu fundo e cor do texto. */
+div#how_we_work > a button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: var(--cor1);
+  font-weight: bold;
+}
+
+/* --- Media Query para telas menores (até 730px de largura) na Seção "Como Trabalhamos" --- */
+/* Ajustes para a seção "Como Trabalhamos" em dispositivos móveis. */
+@media screen and (max-width: 730px) {
+  /* Altera o layout para coluna e centraliza o texto em mobile. */
+  div#how_we_work {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Torna a imagem decorativa de fundo para mobile visível. */
+  div#image_how_we_work_mobile {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+  /* Oculta a imagem decorativa de fundo para desktop em mobile. */
+  div#image_how_we_work_desktop {
+    display: none;
+  }
+
+  /* Ajusta a margem superior do botão em mobile. */
+  div#how_we_work > a button {
+    margin-top: 30px;
+  }
+}
+
+/* --- Rodapé (Footer) --- */
+/* Estilos para o fundo do rodapé, incluindo margem superior e cor de fundo. */
+section#footer-bg {
+  position: relative;
+  margin-top: 200px;
+  background-color: rgb(247, 247, 247);
+}
+
+/* Contêiner principal do rodapé, usando Grid para organizar o conteúdo. */
+div#footer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 150px 1fr;
+  max-width: 1100px;
+  padding: 0px 10px;
+  margin: 0 auto;
+}
+
+/* --- Imagens do Rodapé (Desktop e Mobile) --- */
+/* Posicionamento da imagem decorativa do rodapé para desktop. */
+div#image-footer-desktop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* Oculta a imagem decorativa do rodapé para mobile por padrão. */
+div#image-footer-mobile {
+  display: none;
+}
+
+/* Estilos para o cabeçalho do rodapé, que contém o logo e os ícones de redes sociais. */
+div#header_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  border-bottom: 1px solid rgb(163, 163, 163);
+  grid-column: 1/-1;
+  padding-bottom: 40px;
+  z-index: 1;
+}
+
+/* Contêiner para a lista de ícones de redes sociais. */
+div#lista {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Adiciona um espaçamento à esquerda para todas as imagens de ícones, exceto a primeira. */
+div#lista img + img {
+  padding-left: 10px;
+}
+
+/* Efeito hover para os ícones de redes sociais, alterando sua cor. */
+div#lista img:hover {
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(10%) sepia(9%) saturate(3797%)
+    hue-rotate(215deg) brightness(98%) contrast(85%);
+}
+
+/* Estilos para os blocos de informação no rodapé. */
+div.info_footer {
+  margin-top: 40px;
+  font-family: var(--font2);
+  text-transform: uppercase;
+  z-index: 1;
+  margin-bottom: 50px;
+}
+
+/* Estilos para o título de cada bloco de informação no rodapé. */
+div.info_footer > h1 {
+  font-size: 0.9em;
+  color: var(--cor4);
+  margin-bottom: 30px;
+}
+
+/* Estilos para os links de texto dentro dos blocos de informação do rodapé. */
+div.info_footer > p {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: var(--cor1);
+  line-height: 1.8;
+}
+
+/* Efeito hover para os links de texto no rodapé, adicionando um sublinhado. */
+div.info_footer > p:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* --- Media Query para telas menores (até 680px de largura) no Rodapé --- */
+/* Ajustes para o layout do rodapé em dispositivos móveis. */
+@media screen and (max-width: 680px) {
+  /* Reorganiza o layout do rodapé para duas colunas em mobile e centraliza os itens. */
+  div#footer {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(auto-fit, minmax(100px, auto));
+    justify-items: center;
+  }
+
+  /* Ajusta o layout do cabeçalho do rodapé para coluna e centraliza em mobile. */
+  div#header_footer {
+    flex-direction: column;
+    align-items: center;
+    min-width: 320px;
+    margin-top: 80px;
+  }
+
+  /* Adiciona preenchimento inferior ao logotipo no cabeçalho do rodapé em mobile. */
+  div#header_footer > div.logo {
+    padding-bottom: 20px;
+  }
+
+  /* Alinha o texto dentro do container */
+  div.info_footer{
+    text-align: center;
+  }
+}
